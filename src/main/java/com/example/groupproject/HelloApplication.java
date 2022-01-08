@@ -10,9 +10,34 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class HelloApplication extends Application {
+
+    public void grade(int count, String grade[], double gp[]) {
+
+        if (grade[count].equals("A")) gp[count]=4;
+        else if (grade[count].equals("A-")) gp[count]=3.7;
+        else if (grade[count].equals("B+")) gp[count]=3.3;
+        else if (grade[count].equals("B")) gp[count]=3.0;
+        else if (grade[count].equals("B-")) gp[count]=2.7;
+        else if (grade[count].equals("C+")) gp[count]=2.3;
+        else if (grade[count].equals("C")) gp[count]=2.0;
+        else if (grade[count].equals("C-")) gp[count]=1.7;
+        else if (grade[count].equals("D+")) gp[count]=1.3;
+        else if (grade[count].equals("D")) gp[count]=1.0;
+        else if (grade[count].equals("F")) gp[count]=0.0;
+        else if (grade[count].equals("I")) gp[count]=0.0;
+        else if (grade[count].equals("W")) gp[count]=0.0;
+        else if (grade[count].equals("R")) gp[count]=0.0;
+    }
+
+    double cgpa = 0.00;
+
     @Override
     public void start(Stage stage) throws IOException {
 //
@@ -24,6 +49,11 @@ public class HelloApplication extends Application {
         HBox hb = new HBox(10, intro);
         HBox hb_intro2 = new HBox(10, intro2);
 
+
+        String grade_arr[] = new String[5];
+        String course_arr[] = new String[5];
+        double credits_arr[] = new double[5];
+        double grade_point[] = new double[5];
 
 
         Label tb_course1 = new Label(" Course 1");
@@ -74,7 +104,7 @@ public class HelloApplication extends Application {
         cb1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                course_arr[0] = cb1.getValue();
             }
         });
 
@@ -90,9 +120,16 @@ public class HelloApplication extends Application {
         grade.getItems().add("D+");
         grade.getItems().add("D");
         grade.getItems().add("F*");
-        grade.getItems().add("I**");
-        grade.getItems().add("W**");
-        grade.getItems().add("R**");
+        grade.getItems().add("I");
+        grade.getItems().add("W");
+        grade.getItems().add("R");
+        grade.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                grade_arr[0] = grade.getValue();
+                grade(0,grade_arr, grade_point);
+            }
+        });
 
 
         ComboBox<String> credits = new ComboBox<>();
@@ -100,7 +137,12 @@ public class HelloApplication extends Application {
         credits.getItems().add("1.5");
         credits.getItems().add("3");
         credits.getItems().add("4");
-
+        credits.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                credits_arr[0] = Double.parseDouble(credits.getValue());
+            }
+        });
 
 
 
@@ -146,6 +188,13 @@ public class HelloApplication extends Application {
         cb2.getItems().add("ECO101");
         cb2.getItems().add("BIO103");
 
+        cb2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                course_arr[1] =cb2.getValue();
+            }
+        });
+
 
         ComboBox<String> grade2 = new ComboBox<>();
         grade2.getItems().add("A");
@@ -159,9 +208,17 @@ public class HelloApplication extends Application {
         grade2.getItems().add("D+");
         grade2.getItems().add("D");
         grade2.getItems().add("F*");
-        grade2.getItems().add("I**");
-        grade2.getItems().add("W**");
-        grade2.getItems().add("R**");
+        grade2.getItems().add("I");
+        grade2.getItems().add("W");
+        grade2.getItems().add("R");
+
+        grade2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                grade_arr[1] = grade2.getValue();
+                grade(1,grade_arr, grade_point);
+            }
+        });
 
 
         ComboBox<String> credits2 = new ComboBox<>();
@@ -169,6 +226,13 @@ public class HelloApplication extends Application {
         credits2.getItems().add("1.5");
         credits2.getItems().add("3");
         credits2.getItems().add("4");
+
+        credits2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                credits_arr[1] = Double.parseDouble(credits2.getValue());
+            }
+        });
 
 
         //Course 3
@@ -211,6 +275,12 @@ public class HelloApplication extends Application {
         cb3.getItems().add("POL101");
         cb3.getItems().add("ECO101");
         cb3.getItems().add("BIO103");
+        cb3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                course_arr[2] =cb3.getValue();
+            }
+        });
 
 
 
@@ -226,9 +296,16 @@ public class HelloApplication extends Application {
         grade3.getItems().add("D+");
         grade3.getItems().add("D");
         grade3.getItems().add("F*");
-        grade3.getItems().add("I**");
-        grade3.getItems().add("W**");
-        grade3.getItems().add("R**");
+        grade3.getItems().add("I");
+        grade3.getItems().add("W");
+        grade3.getItems().add("R");
+        grade3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                grade_arr[2] = grade3.getValue();
+                grade(2,grade_arr, grade_point);
+            }
+        });
 
 
         ComboBox<String> credits3 = new ComboBox<>();
@@ -236,6 +313,12 @@ public class HelloApplication extends Application {
         credits3.getItems().add("1.5");
         credits3.getItems().add("3");
         credits3.getItems().add("4");
+        credits3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                credits_arr[2] = Double.parseDouble(credits3.getValue());
+            }
+        });
 
 
         //Course 4
@@ -278,6 +361,12 @@ public class HelloApplication extends Application {
         cb4.getItems().add("POL101");
         cb4.getItems().add("ECO101");
         cb4.getItems().add("BIO103");
+        cb4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                course_arr[3] = cb4.getValue();
+            }
+        });
 
 
 
@@ -293,9 +382,16 @@ public class HelloApplication extends Application {
         grade4.getItems().add("D+");
         grade4.getItems().add("D");
         grade4.getItems().add("F*");
-        grade4.getItems().add("I**");
-        grade4.getItems().add("W**");
-        grade4.getItems().add("R**");
+        grade4.getItems().add("I");
+        grade4.getItems().add("W");
+        grade4.getItems().add("R");
+        grade4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                grade_arr[3] = grade4.getValue();
+                grade(3,grade_arr, grade_point);
+            }
+        });
 
 
         ComboBox<String> credits4 = new ComboBox<>();
@@ -303,6 +399,13 @@ public class HelloApplication extends Application {
         credits4.getItems().add("1.5");
         credits4.getItems().add("3");
         credits4.getItems().add("4");
+
+        credits4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                credits_arr[3] = Double.parseDouble(credits4.getValue());
+            }
+        });
 
 
         //Course 5
@@ -345,6 +448,12 @@ public class HelloApplication extends Application {
         cb5.getItems().add("POL101");
         cb5.getItems().add("ECO101");
         cb5.getItems().add("BIO103");
+        cb5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                course_arr[4] = cb5.getValue();
+            }
+        });
 
 
 
@@ -360,16 +469,30 @@ public class HelloApplication extends Application {
         grade5.getItems().add("D+");
         grade5.getItems().add("D");
         grade5.getItems().add("F*");
-        grade5.getItems().add("I**");
-        grade5.getItems().add("W**");
-        grade5.getItems().add("R**");
+        grade5.getItems().add("I");
+        grade5.getItems().add("W");
+        grade5.getItems().add("R");
 
+        grade5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                grade_arr[4] = grade5.getValue();
+                grade(4,grade_arr, grade_point);
+            }
+        });
 
         ComboBox<String> credits5 = new ComboBox<>();
         credits5.getItems().add("1");
         credits5.getItems().add("1.5");
         credits5.getItems().add("3");
         credits5.getItems().add("4");
+
+        credits5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                credits_arr[4] = Double.parseDouble(credits5.getValue());
+            }
+        });
 
 
 
@@ -381,16 +504,50 @@ public class HelloApplication extends Application {
         HBox fourth_Course = new HBox(20, tb_course4,cb4, credits4,grade4);
         HBox fifth_Course = new HBox(20, tb_course5,cb5, credits5,grade5);
 
+
         Button submit_btn = new Button("Show CGPA");
-        submit_btn.maxHeight(200);
-        submit_btn.maxWidth(300);
+        submit_btn.setMinSize(200,50);
+
 
         submit_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+                File file = new File("Students.txt");
+                try {
+
+
+                    double sum=0;
+                    double totalCr = credits_arr[0]+credits_arr[1]+credits_arr[2]+credits_arr[3]+credits_arr[4];
+                    for (int count1=0; count1<5;count1++){
+                        sum+=((credits_arr[count1])*(grade_point[count1]));
+                    }
+
+                    cgpa = (double) sum/ (double) totalCr;
+
+                    file.createNewFile();
+                    FileWriter fw = new FileWriter("Students.txt", true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    for(int count=0; count<5;count++) {
+
+                        bw.write(course_arr[count]+" "+ credits_arr[count]+" "+grade_arr[count]+"\n");
+
+                    }
+                    bw.close();
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+
+
+
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("CGPA");
+                DecimalFormat df = new DecimalFormat("#.##");
+
                 alert.setHeaderText("You CGPA is: ");
+                alert.setContentText(String.valueOf(df.format(cgpa)));
                 alert.show();
             }
         });
